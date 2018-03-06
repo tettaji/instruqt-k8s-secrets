@@ -7,9 +7,9 @@ if [ $? == 1 ]; then
   exit 1
 fi
 
-PASSWORD=$(echo $SECRET | jq -r '.data["secret.txt"]')
-if [ "$PASSWORD" != "TXlQYXNzd29yZDEh" ]; then
-  echo "FAIL: The encoded value is incorrect. Be sure to pass -n to echo"
+PASSWORD=$(echo $SECRET | jq -r '.data[]' | base64 -d)
+if [ "$PASSWORD" != "MyPassword1!" ]; then
+  echo "FAIL: The value is incorrect. Expected password MyPassword1!"
   exit 1
 fi
 

@@ -1,1 +1,10 @@
 #!/bin/bash
+cat > /root/secret.yml <<EOF
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysecret
+data:
+  mysecret: CHANGEME
+EOF

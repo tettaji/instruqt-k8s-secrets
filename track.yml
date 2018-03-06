@@ -66,17 +66,17 @@ challenges:
       echo -n "yourvalue" |base64
       ```
       The **-n** flag is important as it makes sure a newline isn't encoded along with your value.
+      Newlines in passwords can prevent applications from authenticating.
   assignment: |-
     We have created a secret definition for you in **secret.yml**
     
-    Be sure to:
-    - Pass **-n** to the echo command to make sure a newline isn't encoded along with your password.
+    Edit **secret.yml** and add the **base64** encoded value of **NewPassword2!**
+    Make sure to not include newline characters.
     
-    You can check if everything is working correctly by **refreshing the Kubernetes tab** and checking the secrets.
-    If you need more help, try **kubectl create secret --help**.
+    Then create the secret using **kubectl**
   difficulty: basic
-  unlocks:
-  - secret-definitions
+  # unlocks:
+  # - secret-definitions
   tabs:
   - type: terminal
     title: Shell
