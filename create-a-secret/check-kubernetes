@@ -1,0 +1,16 @@
+#!/bin/bash
+SECRET=$(kubectl get secret password --output json)
+
+# Check if we have a result
+if [ $? == 1 ]; then
+  echo "FAIL: There was no secret called password"
+  exit 1
+fi
+
+PASSWORD=$(echo $SECRET | jq -r '.data["secret.txt"]')
+if [ "$PASSWORD" != "TXlQYXNzd29yZDEh" ]; then
+  echo "FAIL: The encoded value is incorrect. Be sure to pass -n to echo"
+  exit 1
+fi
+
+exit 0

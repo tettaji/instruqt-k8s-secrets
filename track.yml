@@ -1,0 +1,92 @@
+type: track
+version: 0.0.1
+slug: secrets-in-kubernetes
+icon: https://storage.googleapis.com/instruqt-frontend/img/tracks/kubernetes.png
+title: Using Secrets in Kubernetes
+teaser: Secrets are a Kubernetes resource where you can store sensitive key value pairs.
+description: |-
+  Secrets are a Kubernetes resource where you can store sensitive key value pairs. 
+  These can be exposed to a pod as an environment variable or mounted as a file, like configmaps, while obfuscating its contents within the cluster.
+tags:
+- kubernetes
+challenges:
+- slug: create-a-secret
+  credits: 10
+  title: Create a Secret
+  teaser: Create your first secret on Kubernetes.
+  notes:
+  - type: text
+    contents: |-
+      Secrets are a **resource** containing keys with **base64** encoded values.
+
+      These values can be exposed to pods as **environment variables** or mounted as **files**.
+  - type: text
+    contents: |-
+      In order to create a secret from a file, you can run the following.
+      ```
+      echo -n "yourvalue" > ./secret.txt
+
+      kubectl create secret generic secretname --from-file=./secret.txt
+      ```
+      This automatically encodes the value as **base64**
+  assignment: |-
+    Create a secret named **password** from a file containing the value **MyPassword1!** by using **kubectl**.
+    
+    Be sure to:
+    - Pass **-n** to the echo command to make sure a newline isn't encoded along with your password.
+    
+    You can check if everything is working correctly by **refreshing the Kubernetes tab** and checking the secrets.
+    If you need more help, try **kubectl create secret --help**.
+  difficulty: basic
+  unlocks:
+  - secret-definitions
+  tabs:
+  - type: terminal
+    title: Shell
+    hostname: kubernetes
+  - type: service
+    title: Kubernetes
+    hostname: kubernetes
+    port: 8001
+    path: "/api/v1/namespaces/kube-system/services/kubernetes-dashboard/proxy/#!/deployment?namespace=default"
+- slug: secret-definitions
+  credits: 10
+  title: Create a Secret from a definition file
+  teaser: This time, we're creating a secret from a YAML definition
+  notes:
+  - type: text
+    contents: |-
+      Like other resources, secrets can be defined using **YAML** or **JSON** files.
+  - type: text
+    contents: |-
+      Note that when using a definition file, the values will already have to be **base64 encoded**
+
+      To encode a string as base64, run
+      ```
+      echo -n "yourvalue" |base64
+      ```
+      The **-n** flag is important as it makes sure a newline isn't encoded along with your value.
+  assignment: |-
+    We have created a secret definition for you in **secret.yml**
+    
+    Be sure to:
+    - Pass **-n** to the echo command to make sure a newline isn't encoded along with your password.
+    
+    You can check if everything is working correctly by **refreshing the Kubernetes tab** and checking the secrets.
+    If you need more help, try **kubectl create secret --help**.
+  difficulty: basic
+  unlocks:
+  - secret-definitions
+  tabs:
+  - type: terminal
+    title: Shell
+    hostname: kubernetes
+  - type: service
+    title: Kubernetes
+    hostname: kubernetes
+    port: 8001
+    path: "/api/v1/namespaces/kube-system/services/kubernetes-dashboard/proxy/#!/deployment?namespace=default"
+developers:
+- tettaji@xebia.com
+- jborger@xebia.com
+published: false
