@@ -59,6 +59,12 @@ challenges:
       Like other resources, secrets can be defined using **YAML** or **JSON** files.
   - type: text
     contents: |-
+      The command to create a secret from a definition file is the same as any other resource, namely
+      ```
+      kubectl create -f yourdefinition.yml
+      ```
+  - type: text
+    contents: |-
       Note that when using a definition file, the values will already have to be **base64 encoded**
 
       To encode a string as base64, run
@@ -73,7 +79,7 @@ challenges:
     Edit **secret.yml** and add the **base64** encoded value of **NewPassword2!**
     Make sure to not include newline characters.
     
-    Then create the secret using **kubectl**
+    Then create the secret using **kubectl** and the **secret.yml** file.
   difficulty: basic
   # unlocks:
   # - secret-definitions
