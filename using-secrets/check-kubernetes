@@ -1,0 +1,33 @@
+#!/bin/bash
+# Check if secret is created
+
+POD=$(kubectl get pod nginx --output json)
+
+# Check if we have a result
+if [ $? == 1 ]; then
+  echo "FAIL: Pod nginx was not deployed. Make sure the pod named nginx is deployed."
+  exit 1
+fi
+
+
+SECRETREF=$(echo $POD | jq -r '.spec.containers[0].env[0].valueFrom.secretKeyRef.key')
+if [ "$SECRETREF" != "envkey" ]; then
+  echo "FAIL: The key from secret 'secretenv' wasn't referenced in the pod definition"
+  exit 1
+fi
+
+STATUS=$(echo $POD | jq -r '.status.containersStatuses[0].ready')
+if [ "$STATUS" != "true" ]; then
+  echo "FAIL: The pod isn't ready yet. Please try again."
+  exit 1
+fi
+
+kubectl exec nginx env | grep 'thisIsAnEnvVar'
+
+# Check if we have a result
+if [ $? == 1 ]; then
+  echo "FAIL: Environment variables do not contain the value from the secret."
+  exit 1
+fi
+
+exit 0

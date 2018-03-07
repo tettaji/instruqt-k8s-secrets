@@ -30,7 +30,7 @@ challenges:
       ```
       This automatically encodes the value as **base64**
   assignment: |-
-    Create a secret named **password** from a file containing the value **MyPassword1!** by using **kubectl**.
+    Create a secret named **password** from a file containing the value `MyPassword1!` by using **kubectl**.
     
     Be sure to:
     - Pass **-n** to the echo command to make sure a newline isn't encoded along with your password.
@@ -81,8 +81,56 @@ challenges:
     
     Then create the secret using **kubectl** and the **secret.yml** file.
   difficulty: basic
-  # unlocks:
-  # - secret-definitions
+  unlocks:
+  - using-secrets
+  tabs:
+  - type: terminal
+    title: Shell
+    hostname: kubernetes
+  - type: service
+    title: Kubernetes
+    hostname: kubernetes
+    port: 8001
+    path: "/api/v1/namespaces/kube-system/services/kubernetes-dashboard/proxy/#!/deployment?namespace=default"
+- slug: using-secrets
+  credits: 10
+  title: Using a secret within a pod
+  teaser: Exposing the value from a secret as an environment variable
+  notes:
+  - type: text
+    contents: |-
+      Just like configmaps, secrets can be exposed as either environment variables or files.
+  - type: text
+    contents: |-
+      To specify a regular environment variable, a deployment definition would contain the **env** key.
+      ```
+      containers:
+      - name: envcontainer
+        env:
+        - name: VARIABLE
+          value: value
+      ```
+  - type: text
+    contents: |-
+      To expose the value from a secret as an environment variable, you can refer to a key of a **secretKeyRef** instead of hardcoding the value.
+      ```
+      containers:
+      - name: envcontainer
+        env:
+        - name: VARIABLE
+          valueFrom:
+          secretKeyRef:
+            name: mysecretname
+            key: keyfromsecret
+      ```
+  assignment: |-
+    The **nginx.yml** definition is back, now also containing an environment variable.
+
+    Change the value in the pod definition to refer to the key from the existing secret named **secretenv**.
+    Then deploy ```nginx.yml``` using ```kubectl```.
+
+    To get the key from the existing secret, you can use either `kubectl describe secret secretenv` or `kubectl get secret secretenv -o yaml`
+  difficulty: basic
   tabs:
   - type: terminal
     title: Shell
@@ -95,4 +143,5 @@ challenges:
 developers:
 - tettaji@xebia.com
 - jborger@xebia.com
+- eswets@gmail.com
 published: false
