@@ -10,7 +10,7 @@ SECRET=$(kubectl get secret mysecret --output json)
 
 # Check if we have a result
 if [ $? == 1 ]; then
-  echo "FAIL: There secret was not succesfully created"
+  echo "FAIL: The secret was not succesfully created"
   exit 1
 fi
 

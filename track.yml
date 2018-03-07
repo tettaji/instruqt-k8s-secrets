@@ -17,23 +17,28 @@ challenges:
   notes:
   - type: text
     contents: |-
-      Secrets are a **resource** containing keys with **base64** encoded values.
+      Secrets are **resources** containing keys with **base64** encoded values.
 
       These values can be exposed to pods as **environment variables** or mounted as **files**.
   - type: text
     contents: |-
-      In order to create a secret from a file, you can run the following.
+      Secrets are **resources** containing keys with **base64** encoded values.
+
+      These values can be exposed to pods as **environment variables** or mounted as **files**.
+  - type: text
+    contents: |-
+      In order to create a secret from a text file, you can run the following.
       ```
       echo -n "yourvalue" > ./secret.txt
 
       kubectl create secret generic secretname --from-file=./secret.txt
       ```
-      This automatically encodes the value as **base64**
+      This creates a **generic** secret named **secretname** and automatically encodes the value as **base64**
   assignment: |-
-    Create a secret named **password** from a file containing the value `MyPassword1!` by using **kubectl**.
+    Create a generic secret named **password** from a file containing the value `MyPassword1!` by using **kubectl**.
     
     Be sure to:
-    - Pass **-n** to the echo command to make sure a newline isn't encoded along with your password.
+    - If using **echo**, use the **-n** flag to make sure a newline isn't encoded along with your password.
     
     You can check if everything is working correctly by **refreshing the Kubernetes tab** and checking the secrets.
     If you need more help, try **kubectl create secret --help**.
@@ -76,7 +81,7 @@ challenges:
   assignment: |-
     We have created a secret definition for you in **secret.yml**
     
-    Edit **secret.yml** and add the **base64** encoded value of **NewPassword2!**
+    Edit **secret.yml** and add the **base64** encoded value of `NewPassword2!`
     Make sure to not include newline characters.
     
     Then create the secret using **kubectl** and the **secret.yml** file.
@@ -127,9 +132,17 @@ challenges:
     The **nginx.yml** definition is back, now also containing an environment variable.
 
     Change the value in the pod definition to refer to the key from the existing secret named **secretenv**.
-    Then deploy ```nginx.yml``` using ```kubectl```.
+    
+    Then deploy **nginx.yml** using **kubectl**.
 
-    To get the key from the existing secret, you can use either `kubectl describe secret secretenv` or `kubectl get secret secretenv -o yaml`
+    To get the key from the existing secret, you can use either
+    ```
+    kubectl describe secret secretenv
+    ``` 
+    or 
+    ```
+    kubectl get secret secretenv -o yaml
+    ```
   difficulty: basic
   tabs:
   - type: terminal
@@ -144,4 +157,5 @@ developers:
 - tettaji@xebia.com
 - jborger@xebia.com
 - eswets@gmail.com
+- annashepeleva8@gmail.com
 published: false
