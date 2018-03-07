@@ -22,11 +22,6 @@ challenges:
       These values can be exposed to pods as **environment variables** or mounted as **files**.
   - type: text
     contents: |-
-      Secrets are **resources** containing keys with **base64** encoded values.
-
-      These values can be exposed to pods as **environment variables** or mounted as **files**.
-  - type: text
-    contents: |-
       In order to create a secret from a text file, you can run the following.
       ```
       echo -n "yourvalue" > ./secret.txt

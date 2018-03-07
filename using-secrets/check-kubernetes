@@ -16,7 +16,7 @@ if [ "$SECRETREF" != "envkey" ]; then
   exit 1
 fi
 
-STATUS=$(echo $POD | jq -r '.status.containersStatuses[0].ready')
+STATUS=$(echo $POD | jq -r '.status.containerStatuses[0].ready')
 if [ "$STATUS" != "true" ]; then
   echo "FAIL: The pod isn't ready yet. Please try again."
   exit 1
